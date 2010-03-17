@@ -21,17 +21,17 @@ package
         // true if the object is active in the game
         public var inuse:Boolean = false;
 
-        public function GameObject()
+        public function GameObject(graphics:GraphicsResource, position:Point, z:int = 0)
         {
+            this.graphics = graphics;
+            this.zOrder = z;
+            this.position = position.clone();
         }
 
-        public function startupGameObject(graphics:GraphicsResource, position:Point, z:int = 0):void
+        public function startup():void
         {
             if (!inuse)
             {
-                this.graphics = graphics;
-                this.zOrder = z;
-                this.position = position.clone();
                 this.inuse = true;
                 GameObjectManager.Instance.addGameObject(this);
             }

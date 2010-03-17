@@ -2,6 +2,7 @@ package
 {
     import mx.core.*;
     import mx.collections.*;
+    import flash.geom.*;
     import flash.display.*;
     
     public class GameObjectManager
@@ -46,7 +47,10 @@ package
         public function startup():void
         {
             lastFrame = new Date();
-            new Bounce().startupBounce();
+            new Bounce().startup();
+            new Scrolling(new Point(700,300)).startup();
+            new Scrolling(new Point(600,200)).startup();
+            new Scrolling(new Point(800,250)).startup();
         }
 
         public function shutdown():void
