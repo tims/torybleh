@@ -55,5 +55,13 @@ package
         public function enterFrame(dt:Number):void
         {
         }
+        
+        public function keyDown(event:KeyboardEvent):void
+        {
+        }
+
+        public function keyUp(event:KeyboardEvent):void
+        {
+        }
     }
 }

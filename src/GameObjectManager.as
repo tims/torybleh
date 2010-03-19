@@ -1,9 +1,11 @@
 package
 {
-    import mx.core.*;
-    import mx.collections.*;
-    import flash.geom.*;
     import flash.display.*;
+    import flash.events.*;
+    import flash.geom.*;
+    
+    import mx.collections.*;
+    import mx.core.*;
     
     public class GameObjectManager
     {
@@ -148,6 +150,22 @@ package
                 }
             }
             removedGameObjects.removeAll();
+        }
+        
+        public function keyDown(event:KeyboardEvent):void
+        {
+            for each (var gameObject:GameObject in gameObjects)
+            {
+                gameObject.keyDown(event);
+            }
+        }
+
+        public function keyUp(event:KeyboardEvent):void
+        {
+            for each (var gameObject:GameObject in gameObjects)
+            {
+                if (gameObject.inuse) gameObject.keyUp(event);
+            }
         }
     }
 }
