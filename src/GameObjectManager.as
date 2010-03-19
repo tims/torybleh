@@ -48,6 +48,7 @@ package
         {
             lastFrame = new Date();
             new Bounce().startup();
+            new Bulldog().startup();
             new Scrolling(new Point(700,300)).startup();
             new Scrolling(new Point(600,200)).startup();
             new Scrolling(new Point(800,250)).startup();
