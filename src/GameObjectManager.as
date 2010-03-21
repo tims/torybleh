@@ -3,12 +3,15 @@ package
     import flash.display.*;
     import flash.events.*;
     import flash.geom.*;
+    import flash.utils.Timer;
     
     import mx.collections.*;
     import mx.core.*;
     
     public class GameObjectManager
     {
+        private var timer:Timer;
+
         // double buffer
         public var backBuffer:BitmapData;
 
@@ -31,7 +34,8 @@ package
         // a collection where removed GameObjects are placed, to avoid removing items
         // to gameObjects while in the gameObjects collection while it is in a loop
         protected var removedGameObjects:ArrayCollection = new ArrayCollection();        
-        
+
+            
         static public function get Instance():GameObjectManager
         {
             if ( instance == null )
@@ -49,16 +53,21 @@ package
         public function startup():void
         {
             lastFrame = new Date();
-            new Bounce().startup();
             new Bulldog().startup();
-            new Scrolling(new Point(700,300)).startup();
-            new Scrolling(new Point(600,200)).startup();
-            new Scrolling(new Point(800,250)).startup();
+            
+            timer = new Timer(0);
+            timer.addEventListener(TimerEvent.TIMER, timerTick);
+            timer.start();    
         }
 
         public function shutdown():void
         {
             shutdownAll();
+        }
+
+        private function timerTick(evt:TimerEvent):void {
+            new Family().startup();
+            timer.delay = 100 + 2000 * Math.random();
         }
 
         public function enterFrame():void

@@ -1,5 +1,6 @@
 package
 {
+    import flash.display.BitmapData;
     import flash.events.*;
     import flash.geom.*;
     import flash.ui.Keyboard;
@@ -16,7 +17,7 @@ package
 
         public function Bulldog()
         {
-            super(ResourceManager.BrownPlaneGraphics, new Point(100,250));
+            super(ResourceManager.BullyGraphics, new Point(0,100));
         }
 
         override public function shutdown():void
