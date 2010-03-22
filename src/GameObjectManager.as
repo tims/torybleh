@@ -3,6 +3,7 @@ package
     import flash.display.*;
     import flash.events.*;
     import flash.geom.*;
+    import flash.utils.Dictionary;
     import flash.utils.Timer;
     
     import mx.collections.*;
@@ -35,6 +36,7 @@ package
         // to gameObjects while in the gameObjects collection while it is in a loop
         protected var removedGameObjects:ArrayCollection = new ArrayCollection();        
 
+        protected var collisionMap:Dictionary = new Dictionary();
             
         static public function get Instance():GameObjectManager
         {
@@ -80,6 +82,7 @@ package
             removeDeletedGameObjects();
             insertNewGameObjects();
             // now allow objects to update themselves
+            checkCollisions();
             for each (var gameObject:GameObject in gameObjects)
             {
                 if (gameObject.inuse)
@@ -174,6 +177,47 @@ package
             for each (var gameObject:GameObject in gameObjects)
             {
                 if (gameObject.inuse) gameObject.keyUp(event);
+            }
+        }
+        
+        public function addCollidingPair(collider1:String, collider2:String):void
+        {
+            if (collisionMap[collider1] == null)
+                collisionMap[collider1] = new Array();
+            if (collisionMap[collider2] == null)
+                collisionMap[collider2] = new Array();
+            collisionMap[collider1].push(collider2);
+            collisionMap[collider2].push(collider1);
+        }
+        
+        protected function checkCollisions():void
+        {
+            for (var i:int = 0; i < gameObjects.length; ++i)
+            {
+                var gameObjectI:GameObject = gameObjects.getItemAt(i) as GameObject;
+                for (var j:int = i + 1; j < gameObjects.length; ++j)
+                {
+                    var gameObjectJ:GameObject = gameObjects.getItemAt(j) as GameObject;
+                    // early out for non-colliders
+                    var collisionNameNotNothing:Boolean = gameObjectI.collisionName != CollisionIdentifiers.NONE;
+                    // objects can still exist in the gameObjects collection after being disposed, so check
+                    var bothInUse:Boolean = gameObjectI.inuse && gameObjectJ.inuse;
+                    // make sure we have an entry in the collisionMap
+                    var collisionMapEntryExists:Boolean = collisionMap[gameObjectI.collisionName] != null;
+                    // make sure the two objects are set to collide
+                    var testForCollision:Boolean = collisionMapEntryExists && collisionMap[gameObjectI.collisionName].indexOf(gameObjectJ.collisionName) != -1
+                    if ( collisionNameNotNothing &&
+                        bothInUse &&
+                        collisionMapEntryExists &&
+                        testForCollision)
+                    {
+                        if (gameObjectI.CollisionArea. intersects(gameObjectJ.CollisionArea))
+                        {
+                            gameObjectI.collision(gameObjectJ);
+                            gameObjectJ.collision(gameObjectI);
+                        }
+                    }
+                }
             }
         }
     }

@@ -26,9 +26,11 @@
 
     <mx:Script><![CDATA[
         protected var inGame:Boolean = false;
+        protected var score:Number;
 
         public function CreationComplete():void
         {
+            GameObjectManager.Instance. addCollidingPair(CollisionIdentifiers.PLAYERWEAPON, CollisionIdentifiers.ENEMY);
         }
 
         public function EnterFrame(event:Event):void

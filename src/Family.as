@@ -13,9 +13,10 @@ package
         protected var direction:Point = new Point(-1, 0);
 
         public function Family() {
-            super(ResourceManager.BrownPlaneGraphics, new Point(Application.application.width,0));
+            super(ResourceManager.SingleParentFamilyGraphics, new Point(Application.application.width,0));
             position.y = (Application.application.height - graphics.bitmap.height);
             position.y = position.y * Math.random();  
+            collisionName = CollisionIdentifiers.ENEMY;
         }
         
         override public function shutdown():void
@@ -32,6 +33,10 @@ package
             if (position.x < -graphics.bitmap.width) {
                 shutdown();
             }
+        }
+        
+        override public function collision(other:GameObject):void {
+            shutdown();
         }
     }
 }

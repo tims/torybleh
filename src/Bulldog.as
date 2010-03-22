@@ -1,10 +1,11 @@
 package
 {
-    import flash.display.BitmapData;
     import flash.events.*;
     import flash.geom.*;
+    import flash.media.SoundTransform;
     import flash.ui.Keyboard;
     
+    import mx.charts.BarChart;
     import mx.core.*;
 
     public class Bulldog extends GameObject
@@ -17,7 +18,8 @@ package
 
         public function Bulldog()
         {
-            super(ResourceManager.BullyGraphics, new Point(0,100));
+            super(ResourceManager.BullyGraphics, new Point(0,100), 1);
+            collisionName = CollisionIdentifiers.PLAYER;
         }
 
         override public function shutdown():void
@@ -56,6 +58,8 @@ package
                 direction.x = -1;
             } else if (event.keyCode == Keyboard.RIGHT) {
                 direction.x = 1;
+            } else if (event.keyCode == Keyboard.SPACE) {
+                new Bark(position, graphics.bitmap.rect).startup();
             }
         }
 
