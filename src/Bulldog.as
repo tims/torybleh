@@ -2,13 +2,11 @@ package
 {
     import flash.events.*;
     import flash.geom.*;
-    import flash.media.SoundTransform;
     import flash.ui.Keyboard;
     
-    import mx.charts.BarChart;
     import mx.core.*;
 
-    public class Bulldog extends GameObject
+    public class MoveableObject extends GameObject
     {
         // movement speed of the bouncing object
         protected static const speed:Number = 150;
@@ -16,9 +14,9 @@ package
         // direction that the bouncing object should move (1 for right/down, -1 for left/up)
         protected var direction:Point = new Point(0, 0);
 
-        public function Bulldog()
+        public function ControllableObject()
         {
-            super(ResourceManager.BullyGraphics, new Point(0,100), 1);
+            super(ResourceManager.BullyGraphics, new Point(0,100), 2);
             collisionName = CollisionIdentifiers.PLAYER;
         }
 

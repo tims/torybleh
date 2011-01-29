@@ -11,13 +11,15 @@ package
     
     public class GameObjectManager
     {
+        private var score:Number = 0;
+        
         private var timer:Timer;
 
         // double buffer
         public var backBuffer:BitmapData;
 
         // colour to use to clear backbuffer with
-        public var clearColor:uint = 0xFF0043AB;
+        public var clearColor:uint = 0xFF3c67a8;
 
         // static instance
         protected static var instance:GameObjectManager = null;
@@ -54,21 +56,27 @@ package
 
         public function startup():void
         {
+            score = 0;
             lastFrame = new Date();
-            new Bulldog().startup();
-            
-            timer = new Timer(0);
-            timer.addEventListener(TimerEvent.TIMER, timerTick);
-            timer.start();    
         }
 
         public function shutdown():void
         {
+            timer.stop();
             shutdownAll();
+            enterFrame();
+        }
+        
+        public function incrementScore():void {
+            score += 1;
+        }
+        
+        public function getScore():Number {
+            return score;
         }
 
         private function timerTick(evt:TimerEvent):void {
-            new Family().startup();
+            new Family(100 + timer.currentCount).startup();
             timer.delay = 100 + 2000 * Math.random();
         }
 

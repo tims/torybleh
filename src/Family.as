@@ -6,14 +6,15 @@ package
 
     public class Family extends GameObject
     {
-        // movement speed of the bouncing object
-        protected static const speed:Number = 100;
+        // movement speed
+        protected var speed:Number = 100;
 
         // direction that the bouncing object should move (1 for right/down, -1 for left/up)
         protected var direction:Point = new Point(-1, 0);
 
-        public function Family() {
-            super(ResourceManager.SingleParentFamilyGraphics, new Point(Application.application.width,0));
+        public function Family(speed:Number) {
+            this.speed = speed;
+            super(ResourceManager.SingleParentFamilyGraphics, new Point(Application.application.width,0), 1);
             position.y = (Application.application.height - graphics.bitmap.height);
             position.y = position.y * Math.random();  
             collisionName = CollisionIdentifiers.ENEMY;
@@ -36,6 +37,8 @@ package
         }
         
         override public function collision(other:GameObject):void {
+            GameObjectManager.Instance.incrementScore();
+            new Blood(position, graphics.bitmap.rect).startup();
             shutdown();
         }
     }

@@ -1,6 +1,7 @@
 package
 {
     import flash.display.*;
+    
     import mx.core.SoundAsset;
     
     public final class ResourceManager
@@ -13,6 +14,10 @@ package
         public static var Bully:Class;
         public static var BullyGraphics:GraphicsResource = new GraphicsResource(new Bully());
         
+        [Embed(source="../media/blood.png")]
+        public static var BloodPng:Class;
+        public static var BloodGraphics:GraphicsResource = new GraphicsResource(new BloodPng());
+        
         [Embed(source="../media/bully_bark1.mp3")]
         public static var Bark1Sound:Class;
         public static var Bark1FX:SoundAsset = new Bark1Sound() as SoundAsset;
@@ -20,5 +25,9 @@ package
         [Embed(source="../media/bully_bark2.mp3")]
         public static var Bark2Sound:Class;
         public static var Bark2FX:SoundAsset = new Bark2Sound() as SoundAsset;
+        
+        [Embed(source="../media/alittlelist2.mp3")]
+        public static var SoundTrackSound:Class;
+        public static var SoundTrack:SoundAsset = new SoundTrackSound() as SoundAsset;
     }
 }
